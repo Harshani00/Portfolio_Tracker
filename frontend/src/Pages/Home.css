@@ -1,0 +1,46 @@
+.homepage-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7); /* Fallback background overlay */
+  }
+  
+  .homepage-content {
+    max-width: 600px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .homepage-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .homepage-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .homepage-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #005B41;
+    border: none;
+  }
+  .homepage-button:hover {
+    background-color: #1E5128;
+  }
+  

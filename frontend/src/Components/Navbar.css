@@ -1,0 +1,25 @@
+.custom-navbar {
+    background: linear-gradient(45deg, #005B41, white); /* Gradient background */
+    color: white;
+  }
+  
+  .custom-navbar .navbar-brand,
+  .custom-navbar .nav-link {
+    color: black !important; /* Ensure the text is visible */
+    font-weight: bold;
+  }
+  
+  .custom-navbar .nav-link:hover {
+    color: #005B41 !important; /* Text hover color */
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle hover effect */
+    border-radius: 5px;
+  }
+  
+  .custom-navbar .navbar-toggler {
+    border-color: white; /* Toggler button */
+  }
+  
+  .custom-navbar .navbar-toggler-icon {
+    background-color: white; /* Toggler icon */
+  }
+  

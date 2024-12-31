@@ -1,0 +1,61 @@
+.container-split {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .image-half {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  
+  .form-half {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Adds a white background for contrast */
+  }
+  
+  .access-container1 {
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow */
+    max-width: 420px;
+    width: 100%;
+  }
+  
+  .access-title {
+    margin-bottom: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+  }
+  
+  .button1 {
+    background-color: #005B41;
+    border-color: #005B41;
+    color: white;
+    margin-top: 20px;
+  }
+  
+  .button1:focus,
+  .button1:hover {
+    background-color: #1E5128;
+    border-color: #1E5128;
+    color: white;
+  }
+  
+  .account {
+    color: #000;
+  }
+  
+  .signuphyperlink {
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(0, 59, 10);
+  }
