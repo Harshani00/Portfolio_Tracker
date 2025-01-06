@@ -8,9 +8,10 @@ import Navbar from './Components/Navbar';
 import NewStockDetails from './Pages/NewStockDetails';
 import CurrentStock from './Pages/CurrentStock';
 import Login from './Pages/Login'; // Import the Login component
-import SignIn from './Pages/SignIn';
+import Signup from './Pages/Signup';
 import HomePage from './Pages/Home';
 import Home from './Pages/Home';
+
 
 
 
@@ -28,7 +29,7 @@ class App extends React.Component {
           <Route path="/newStockdetails" element={<NewStockDetails />} />
           <Route path="/currentStock" element={<CurrentStock />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<Signup />} />
          
        
          

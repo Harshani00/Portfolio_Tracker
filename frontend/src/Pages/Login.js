@@ -23,36 +23,44 @@ export default function Login() {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
-    // Mock response for login
-    const mockResponse = {
-      status: true, // Change this to false to simulate a failed login
-      user_name: 'Mock User',
-      user_role: 'Admin',
-      user_id: '123',
-      message: 'Invalid credentials', // Simulate error message
-    };
-
-    if (mockResponse.status) {
-      const { user_name, user_role, user_id } = mockResponse;
+  
+    try {
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        alert(data.message || 'Login failed');
+        return;
+      }
+  
+      const { user_name, user_role, user_id } = data;
       setUserName(user_name);
       localStorage.setItem('userName', user_name);
       localStorage.setItem('userRole', user_role);
       localStorage.setItem('userID', user_id);
       alert(`Welcome ${user_name}!`);
       navigate('/dashboard');
-    } else {
-      alert(mockResponse.message);
+    } catch (error) {
+      console.error('Error logging in:', error);
+      alert('Something went wrong. Please try again.');
     }
   };
-
+  
+  
   const handleSignupRedirect = () => {
     navigate('/signup');
   };

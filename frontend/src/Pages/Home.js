@@ -32,7 +32,7 @@ export default function Home() {
           <Button
             variant="secondary"
             className="homepage-button"
-            onClick={() => handleNavigate('/signin')}
+            onClick={() => handleNavigate('/signup')}
           >
             Sign Up
           </Button>

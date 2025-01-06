@@ -18,11 +18,12 @@ function Navigationbar() {
             alt="Logo"
             style={{ width: '30px', height: '30px', marginRight: '10px'}} // Adjust size and spacing
           />
-          𝑷𝒐𝒓𝒕𝒇𝒐𝒍𝒊𝒐360
+          ᴘᴏʀᴛғᴏʟɪᴏ𝟹𝟼𝟶
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto"> {/* Align items to the right using ms-auto */}
+             <Nav.Link onClick={() => navigate('/home')}>Home</Nav.Link>
             <Nav.Link onClick={() => navigate('/dashboard')}>Dashboard</Nav.Link>
             <Nav.Link onClick={() => navigate('/newStockdetails')}>NewStock</Nav.Link>
             <Nav.Link onClick={() => navigate('/currentstock')}>Current Stocks</Nav.Link>
