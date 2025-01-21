@@ -182,19 +182,53 @@ app.get('/getPortfolios', (req, res) => {
   });
 });
 
+// app.get('/currentStock/:userId', (req, res) => {
+//   const userId = req.params.userId;
+
+//   // Log the received userId to ensure it's correct
+//   console.log("UserId received from frontend:", userId);
+
+//   // SQL query to fetch stocks based on userId
+//   const query = 'SELECT * FROM stock WHERE U_Id = ?';
+
+//   db.query(query, [userId], (error, results) => {
+//     if (error) {
+//       console.error('Error fetching stocks:', error);
+//       return res.status(500).json({ message: 'Failed to fetch stock data' });
+//     }
+
+//     // Send the results back as JSON
+//     res.json(results);
+//   });
+// });
 app.get('/currentStock/:userId', (req, res) => {
   const userId = req.params.userId;
 
-  // Log the received userId to ensure it's correct
   console.log("UserId received from frontend:", userId);
 
-  // SQL query to fetch stocks based on userId
-  const query = 'SELECT * FROM stock WHERE U_Id = ?';
+  // SQL query to fetch portfolios and their stocks for the user
+  const query = `
+    SELECT 
+      portfolios.Portfolio_Id,
+      portfolios.portfolio_name,
+      portfolios.created_date AS portfolio_created_date,
+      stock.stock_name,
+      stock.ticker,
+      stock.buy_price,
+      stock.purchase_date,
+      stock.quantity,
+      portfolio_stocks.Quantity AS portfolio_quantity
+    FROM portfolios
+    LEFT JOIN portfolio_stocks ON portfolios.Portfolio_Id = portfolio_stocks.Portfolio_Id
+    LEFT JOIN stock ON portfolio_stocks.Stock_Id = stock.Stock_Id
+    WHERE portfolios.U_Id = ?
+    ORDER BY portfolios.Portfolio_Id, stock.stock_name;
+  `;
 
   db.query(query, [userId], (error, results) => {
     if (error) {
-      console.error('Error fetching stocks:', error);
-      return res.status(500).json({ message: 'Failed to fetch stock data' });
+      console.error('Error fetching portfolio stocks:', error);
+      return res.status(500).json({ message: 'Failed to fetch portfolio stocks data' });
     }
 
     // Send the results back as JSON
@@ -202,6 +236,7 @@ app.get('/currentStock/:userId', (req, res) => {
   });
 });
 
+// Route for Delete stock data
 app.delete('/currentStock/:userId/:stockName', (req, res) => {
   const { userId, stockName } = req.params;
 
@@ -230,6 +265,7 @@ app.delete('/currentStock/:userId/:stockName', (req, res) => {
   });
 });
 
+// End Point for Update stock data
 app.put('/currentStock/:userId/:stockName', (req, res) => {
   const { userId, stockName } = req.params;
   const { quantity, buy_price, purchase_date } = req.body;
@@ -253,29 +289,7 @@ app.put('/currentStock/:userId/:stockName', (req, res) => {
     res.status(200).json({ message: 'Stock updated successfully' });
   });
 });
-app.put('/currentStock/:userId/:stockName', (req, res) => {
-  const { userId, stockName } = req.params;
-  const { quantity, buy_price, purchase_date } = req.body;
 
-  const query = `
-    UPDATE stock 
-    SET quantity = ?, buy_price = ?, purchase_date = ?
-    WHERE U_Id = ? AND stock_name = ?
-  `;
-
-  db.query(query, [quantity, buy_price, purchase_date, userId, stockName], (error, result) => {
-    if (error) {
-      console.error('Error updating stock:', error);
-      return res.status(500).json({ message: 'Failed to update stock' });
-    }
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Stock not found' });
-    }
-
-    res.status(200).json({ message: 'Stock updated successfully' });
-  });
-});
 
 // Start the server
 const PORT = process.env.PORT || 5000;

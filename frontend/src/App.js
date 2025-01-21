@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Dashboard from './Pages/Dashboard';
-import StockHoldings from './Pages/StockHolding';
+
 import Navbar from './Components/Navbar';
 import NewStockDetails from './Pages/NewStockDetails';
 import CurrentStock from './Pages/CurrentStock';
@@ -24,7 +24,7 @@ class App extends React.Component {
           <Route path="/" element={<Navigate to="/home" />} />
          <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/stockholding" element={<StockHoldings />} />
+          
           <Route path="/navbar" element={<Navbar />} />  {/* Default route */}  {/* Replace with your own */}
           <Route path="/newStockdetails" element={<NewStockDetails />} />
           <Route path="/currentStock" element={<CurrentStock />} />

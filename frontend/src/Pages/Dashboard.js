@@ -40,7 +40,7 @@ function Dashboard() {
     };
 
     const fetchStockPrices = async (stocks) => {
-      const API_TOKEN = "ctof3l1r01qpsueffvmgctof3l1r01qpsueffvn0"; 
+      const API_TOKEN = "cu7r431r01qhqu5bes4gcu7r431r01qhqu5bes50"; 
       try {
         let totalValue = 0;
         let topStock = null;
@@ -86,8 +86,8 @@ function Dashboard() {
     datasets: [
       {
         data: portfolioDistribution.map((stock) => stock.value),
-        backgroundColor: ["#21094E", "#118B50", "#000957", "#872341", "#F29F58"],
-        hoverBackgroundColor: ["#21094E", "#118B50", "#000957", "#872341", "#F29F58"],
+        backgroundColor: ["#21094E", "#118B50", "#000957", "#872341", "#F29F58", "#F29F56"],
+        hoverBackgroundColor: ["#21094E", "#118B50", "#000957", "#872341", "#F29F58", "#F29F56"],
       },
     ],
   };
