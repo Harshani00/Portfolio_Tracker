@@ -1,4 +1,4 @@
-# Portfolio Tracker
+# Portfolio360
 
 Managing your investments and tracking their performance is critical for achieving your financial goals. The **Portfolio Tracker** helps users effectively monitor their stock investments, analyze performance, and make informed decisions. Designed for investors, this tool simplifies tracking portfolio value, identifying top-performing stocks, and visualizing portfolio distribution through intuitive charts.
 
