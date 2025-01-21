@@ -24,8 +24,8 @@ npm install
 ---
 ### 2. Start the Frontend
 
-1.Open the terminal.
-2.Navigate to the frontend folder:
+1. Open the terminal.  
+2. Navigate to the frontend folder:  
 ```bash
 cd frontend 
 ```
