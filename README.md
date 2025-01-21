@@ -54,5 +54,6 @@ npm start
 ## Assumptions or Limitations
 
 - **API Rate Limiting**: 
-  The Finnhub API has a rate limit of 30 requests per second. Due to this limitation, the application cannot display separate portfolios for each user simultaneously. Instead, all portfolios are aggregated, which may lead to delays in fetching stock prices if the number of requests exceeds the allowed limit.
+  The Finnhub API has a rate limit of 30 requests per second. Due to this limitation, the application cannot display separate portfolios for each user simultaneously. Instead, all portfolios are aggregated and shown together, ensuring that the number of requests does not exceed the allowed limit.
+
 
