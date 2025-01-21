@@ -2,9 +2,8 @@
 
 Managing your investments and tracking their performance is critical for achieving your financial goals. The **Portfolio Tracker** helps users effectively monitor their stock investments, analyze performance, and make informed decisions. Designed for investors, this tool simplifies tracking portfolio value, identifying top-performing stocks, and visualizing portfolio distribution through intuitive charts.
 
----
+![home](https://github.com/user-attachments/assets/cffc593f-9ee3-4302-bac3-d410841c0d79)
 
-![Portfolio Tracker](https://github.com/Harshani00/Property_Price_Prediction_System/assets/91328513/f96318c7-7b50-49e6-8455-795c577e6b6b)
 
 ---
 
@@ -51,3 +50,10 @@ If you're already in the frontend directory, use these commands to launch the fr
 cd frontend
 npm start
 ```
+
+## Assumptions or Limitations
+
+- **API Rate Limiting**: 
+  The Finnhub API has a rate limit of 30 requests per second. Due to this limitation, the application cannot display separate portfolios for each user simultaneously. Instead, all portfolios are aggregated and shown together, ensuring that the number of requests does not exceed the allowed limit.
+
+
