@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import './Home.css'; // Assuming the CSS for this file
-import backgroundImage from '../Assets/Img4.png'; // Background image for the homepage
+import './Home.css';
+import backgroundImage from '../Assets/Img4.png';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function Home() {
       <div className="homepage-content">
         <h1 className="homepage-title">Welcome to PORTFOLIO360</h1>
         <p className="homepage-subtitle">
-          Discover, connect, and achieve your goals with us. Join our community today!
+        Stay on top of your portfolio with real-time updates, insights, and analytics all in one place
         </p>
         <div className="button-group">
           <Button

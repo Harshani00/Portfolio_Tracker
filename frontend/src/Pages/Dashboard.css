@@ -1,30 +1,77 @@
+/* General container styles */
 .dashboard-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+  height:750px;
+}
+
+/* Section heading */
+.dashboard-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Portfolio summary */
+.portfolio-summary {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+}
+
+.portfolio-summary p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+  font-weight: bold;
+}
+
+/* Top-performing stock container */
+.top-performing-stock {
+  background-color: #005B41;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-performing-stock h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.top-performing-stock p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .portfolio-summary {
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .metrics {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .metric {
-    flex: 1;
-    margin: 0 10px;
+
+  .portfolio-summary p {
     text-align: center;
-    background: #f5f5f5;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   }
-  
-  .metric h3 {
-    margin-bottom: 10px;
-  }
-  
-  .chart {
-    text-align: center;
-  }
-  
+}
+.portfolio-distribution-chart {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}

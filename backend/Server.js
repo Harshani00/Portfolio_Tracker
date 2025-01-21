@@ -5,9 +5,11 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 require('dotenv').config(); // Load environment variables
 
+
 const app = express();
-app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 // MySQL Database Connection
 const db = mysql.createConnection({
@@ -98,40 +100,182 @@ app.post('/login', async (req, res) => {
 
   // Add New Stock Endpoint
 
-app.post('/newStockdetails', async (req, res) => {
-  const { U_Id, stock_name, ticker, quantity, buy_price, purchase_date } = req.body;
+// Add New Stock Endpoint
+app.post('/newStockdetails', (req, res) => {
+  console.log('Request body:', req.body); // Debug log
+  const { U_Id, stock_name, ticker, quantity, buy_price, purchase_date, Portfolio_Id } = req.body;
 
-  // Validate required fields
   if (!U_Id || !stock_name || !ticker || !quantity || !buy_price || !purchase_date) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
-  // SQL query to insert stock details
   const sql = `
     INSERT INTO stock (U_Id, stock_name, ticker, quantity, buy_price, purchase_date, created_date)
     VALUES (?, ?, ?, ?, ?, ?, NOW())
   `;
 
-  // Execute query
-  db.query(
-    sql,
-    [U_Id, stock_name, ticker, quantity, buy_price, purchase_date],
-    (err, result) => {
+  db.query(sql, [U_Id, stock_name, ticker, quantity, buy_price, purchase_date], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+
+    const stockId = result.insertId; // Get the inserted stock ID
+
+    // Insert into portfolio_stocks table
+    const portfolioSql = `
+      INSERT INTO portfolio_stocks (Portfolio_Id, Stock_Id, Quantity)
+      VALUES (?, ?, ?)
+    `;
+    db.query(portfolioSql, [Portfolio_Id, stockId, quantity], (err, result) => {
       if (err) {
         console.error('Database error:', err);
-        return res.status(500).json({ message: 'Database error', error: err });
+        return res.status(500).json({ message: 'Failed to add to portfolio_stocks', error: err });
       }
 
-      // Return success response
-      res.status(201).json({
-        message: 'Stock details added successfully',
-        stock_id: result.insertId, // Return the ID of the newly created stock entry
-      });
-    }
-  );
+      // Respond back after successfully adding both stock and portfolio association
+      res.status(201).json({ message: 'Stock added successfully and associated with portfolio', stockId });
+    });
+  });
 });
 
-  
+
+
+// Add New Portfolio
+app.post('/createPortfolio', (req, res) => {
+  console.log('Request body:', req.body); // Debug log
+  const { U_Id, portfolio_name } = req.body;
+
+  if (!U_Id || !portfolio_name) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  const sql = `
+    INSERT INTO portfolios (U_Id, portfolio_name, created_date )
+    VALUES ( ? ,?,NOW())
+  `;
+
+  db.query(sql, [U_Id, portfolio_name], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.status(201).json({ message: 'New Portfolio Created Successfully ', Portfolio_Id: result.insertId });
+  });
+});
+
+app.get('/getPortfolios', (req, res) => {
+  const userId = req.query.U_Id; // Retrieve U_Id from query parameters
+
+  if (!userId) {
+    return res.status(400).json({ message: 'User ID is required' });
+  }
+
+  const sql = 'SELECT Portfolio_Id, portfolio_name FROM portfolios WHERE U_Id = ?';
+
+  db.query(sql, [userId], (err, result) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.status(200).json(result);
+  });
+});
+
+app.get('/currentStock/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  // Log the received userId to ensure it's correct
+  console.log("UserId received from frontend:", userId);
+
+  // SQL query to fetch stocks based on userId
+  const query = 'SELECT * FROM stock WHERE U_Id = ?';
+
+  db.query(query, [userId], (error, results) => {
+    if (error) {
+      console.error('Error fetching stocks:', error);
+      return res.status(500).json({ message: 'Failed to fetch stock data' });
+    }
+
+    // Send the results back as JSON
+    res.json(results);
+  });
+});
+
+app.delete('/currentStock/:userId/:stockName', (req, res) => {
+  const { userId, stockName } = req.params;
+
+  // Delete the related record from portfolio_stocks
+  const deletePortfolioStockQuery = 'DELETE FROM portfolio_stocks WHERE Stock_Id IN (SELECT Stock_Id FROM stock WHERE U_Id = ? AND stock_name = ?)';
+  db.query(deletePortfolioStockQuery, [userId, stockName], (error, result) => {
+    if (error) {
+      console.error('Error deleting from portfolio_stocks:', error);
+      return res.status(500).json({ message: 'Failed to delete from portfolio_stocks' });
+    }
+
+    // After deleting related records, delete the stock
+    const deleteStockQuery = 'DELETE FROM stock WHERE U_Id = ? AND stock_name = ?';
+    db.query(deleteStockQuery, [userId, stockName], (error, result) => {
+      if (error) {
+        console.error('Error deleting stock:', error);
+        return res.status(500).json({ message: 'Failed to delete stock' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ message: 'Stock not found' });
+      }
+
+      res.status(200).json({ message: 'Stock deleted successfully' });
+    });
+  });
+});
+
+app.put('/currentStock/:userId/:stockName', (req, res) => {
+  const { userId, stockName } = req.params;
+  const { quantity, buy_price, purchase_date } = req.body;
+
+  const query = `
+    UPDATE stock 
+    SET quantity = ?, buy_price = ?, purchase_date = ?
+    WHERE U_Id = ? AND stock_name = ?
+  `;
+
+  db.query(query, [quantity, buy_price, purchase_date, userId, stockName], (error, result) => {
+    if (error) {
+      console.error('Error updating stock:', error);
+      return res.status(500).json({ message: 'Failed to update stock' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
+
+    res.status(200).json({ message: 'Stock updated successfully' });
+  });
+});
+app.put('/currentStock/:userId/:stockName', (req, res) => {
+  const { userId, stockName } = req.params;
+  const { quantity, buy_price, purchase_date } = req.body;
+
+  const query = `
+    UPDATE stock 
+    SET quantity = ?, buy_price = ?, purchase_date = ?
+    WHERE U_Id = ? AND stock_name = ?
+  `;
+
+  db.query(query, [quantity, buy_price, purchase_date, userId, stockName], (error, result) => {
+    if (error) {
+      console.error('Error updating stock:', error);
+      return res.status(500).json({ message: 'Failed to update stock' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Stock not found' });
+    }
+
+    res.status(200).json({ message: 'Stock updated successfully' });
+  });
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;

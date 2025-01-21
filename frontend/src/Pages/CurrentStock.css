@@ -50,4 +50,67 @@ body
   .table-container button:focus {
     outline: none;
   }
-  
+   /* Styling for the action buttons */
+   /* Style the modal body */
+.modal-body form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Add spacing between form fields */
+  padding: 1rem; /* Add padding inside the form */
+}
+
+/* Style the form groups */
+.modal-body form div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Style the labels */
+.modal-body form label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #333; /* Dark gray for better readability */
+}
+
+/* Style the input fields */
+.modal-body form input {
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+/* Add focus effect to inputs */
+.modal-body form input:focus {
+  border-color: #007bff; /* Blue border on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle shadow on focus */
+}
+
+/* Add spacing to modal footer buttons */
+.modal-footer button {
+  margin: 0 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #005B41; /* Primary button color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-footer button:hover {
+  background-color: #1E5128; /* Darker blue on hover */
+}
+
+.modal-footer button.cancel {
+  background-color: #6c757d; /* Gray for cancel button */
+}
+
+.modal-footer button.cancel:hover {
+  background-color: #5a6268; /* Darker gray on hover */
+}

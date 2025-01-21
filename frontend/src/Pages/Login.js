@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import './LoginSignIn.css'; // Assuming the CSS is in this file
-import backgroundImage from '../Assets/Img2.png'; // Left side image
+import './LoginSignIn.css';
+import backgroundImage from '../Assets/Img2.png'; 
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -52,6 +52,7 @@ export default function Login() {
       localStorage.setItem('userName', user_name);
       localStorage.setItem('userRole', user_role);
       localStorage.setItem('userID', user_id);
+      localStorage.setItem('U_Id', user_id); 
       alert(`Welcome ${user_name}!`);
       navigate('/dashboard');
     } catch (error) {
@@ -68,7 +69,7 @@ export default function Login() {
   return (
     <div className="container-split">
       <div className="image-half" style={{ backgroundImage: `url(${backgroundImage})` }}>
-        {/* Optional: You can also add additional content over the image */}
+        
       </div>
       <div className="form-half">
         <div className="access-container1">

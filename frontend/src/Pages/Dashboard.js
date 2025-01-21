@@ -1,382 +1,137 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Pie } from "react-chartjs-2";
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import "./Dashboard.css";
-
-// // Register required Chart.js components
-// ChartJS.register(ArcElement, Tooltip, Legend);
-
-// const Dashboard = ({ stockHoldings }) => {
-//   const [portfolioValue, setPortfolioValue] = useState(0);
-//   const [topStock, setTopStock] = useState({ name: "N/A", value: 0 });
-//   const [portfolioDistribution, setPortfolioDistribution] = useState({});
-
-//   useEffect(() => {
-//     if (!stockHoldings || stockHoldings.length === 0) {
-//       console.error("Stock holdings are empty or undefined.");
-//       return;
-//     }
-
-//     const fetchStockPrices = async () => {
-//       let totalValue = 0;
-//       const stockValues = {};
-//       let topPerformingStock = { name: "N/A", value: 0 };
-
-//       for (const stock of stockHoldings) {
-//         try {
-//           const { data } = await axios.get(
-//             `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stock.ticker}&apikey=9KVLYO3I1C5F39A9`
-//           );
-
-//           const currentPrice = parseFloat(data["Global Quote"]?.["05. price"]);
-//           if (!currentPrice) continue; // Skip if price is invalid
-
-//           const stockValue = currentPrice * stock.quantity;
-//           totalValue += stockValue;
-//           stockValues[stock.name] = stockValue;
-
-//           if (stockValue > topPerformingStock.value) {
-//             topPerformingStock = { name: stock.name, value: stockValue };
-//           }
-//         } catch (error) {
-//           console.error(`Error fetching data for ${stock.ticker}:`, error);
-//         }
-//       }
-
-//       setPortfolioValue(totalValue);
-//       setTopStock(topPerformingStock);
-//       setPortfolioDistribution(stockValues);
-//     };
-
-//     fetchStockPrices();
-//   }, [stockHoldings]);
-
-//   const chartData = {
-//     labels: Object.keys(portfolioDistribution),
-//     datasets: [
-//       {
-//         data: Object.values(portfolioDistribution),
-//         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-//       },
-//     ],
-//   };
-
-
-//   return (
-//     <div className="dashboard-container">
-//       <h2>Portfolio Dashboard</h2>
-//       <div className="metrics">
-//         <div className="metric">
-//           <h3>Total Portfolio Value</h3>
-//           <p>${portfolioValue.toFixed(2)}</p>
-//         </div>
-//         <div className="metric">
-//           <h3>Top Performing Stock</h3>
-//           <p>
-//             {topStock.name} (${topStock.value ? topStock.value.toFixed(2) : "0.00"})
-//           </p>
-//         </div>
-//       </div>
-//       <div className="chart">
-//         <h3>Portfolio Distribution</h3>
-//         <Pie data={chartData} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// // export default Dashboard;
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Pie } from "react-chartjs-2";
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import "./Dashboard.css";
-// import CurrentStock from "../Pages/CurrentStock"
-// // Register required Chart.js components
-// ChartJS.register(ArcElement, Tooltip, Legend);
-
-// const Dashboard = ({ stockHoldings }) => {
-//   const [portfolioValue, setPortfolioValue] = useState(0);
-//   const [topStock, setTopStock] = useState({ name: "N/A", value: 0 });
-//   const [portfolioDistribution, setPortfolioDistribution] = useState({});
-//   const API_KEY = 'ctof3l1r01qpsueffvmgctof3l1r01qpsueffvn0'; // Replace with your Finnhub API key
-
-//   useEffect(() => {
-//     if (!stockHoldings || stockHoldings.length === 0) {
-//       console.error("Stock holdings are empty or undefined.");
-//       return;
-//     }
-
-//     const fetchStockPrices = async () => {
-//       let totalValue = 0;
-//       const stockValues = {};
-//       let topPerformingStock = { name: "N/A", value: 0 };
-
-//       for (const stock of stockHoldings) {
-//         try {
-//           const { data } = await axios.get(
-//             `https://finnhub.io/api/v1/quote`,
-//             {
-//               params: {
-//                 symbol: stock.ticker,
-//                 token: API_KEY,
-//               },
-//             }
-//           );
-
-//           const currentPrice = data.c; // 'c' is the current price
-//           if (!currentPrice) continue; // Skip if price is invalid
-
-//           const stockValue = currentPrice * stock.quantity;
-//           totalValue += stockValue;
-//           stockValues[stock.name] = stockValue;
-
-//           if (stockValue > topPerformingStock.value) {
-//             topPerformingStock = { name: stock.name, value: stockValue };
-//           }
-//         } catch (error) {
-//           console.error(`Error fetching data for ${stock.ticker}:`, error);
-//         }
-//       }
-
-//       setPortfolioValue(totalValue);
-//       setTopStock(topPerformingStock);
-//       setPortfolioDistribution(stockValues);
-//     };
-
-//     fetchStockPrices();
-//   }, [stockHoldings]);
-
-//   const chartData = {
-//     labels: Object.keys(portfolioDistribution),
-//     datasets: [
-//       {
-//         data: Object.values(portfolioDistribution),
-//         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-//       },
-//     ],
-//   };
-
-//   return (
-//     <div className="dashboard-container">
-//       <h2>Portfolio Dashboard</h2>
-//       <div className="metrics">
-//         <div className="metric">
-//           <h3>Total Portfolio Value</h3>
-//           <p>${portfolioValue.toFixed(2)}</p>
-//         </div>
-//         <div className="metric">
-//           <h3>Top Performing Stock</h3>
-//           <p>
-//             {topStock.name} (${topStock.value ? topStock.value.toFixed(2) : "0.00"})
-//           </p>
-//         </div>
-//       </div>
-//       <div className="chart">
-//         <h3>Portfolio Distribution</h3>
-//         <Pie data={chartData} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import { Pie } from "react-chartjs-2";
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import "./Dashboard.css";
-
-// // Register required Chart.js components
-// ChartJS.register(ArcElement, Tooltip, Legend);
-
-// const Dashboard = ({ stockHoldings }) => {
-//   const [portfolioValue, setPortfolioValue] = useState(0);
-//   const [topStock, setTopStock] = useState({ name: "N/A", value: 0 });
-//   const [portfolioDistribution, setPortfolioDistribution] = useState({});
-
-//   useEffect(() => {
-//     // Check if stockHoldings is valid
-//     if (!stockHoldings || stockHoldings.length === 0) {
-//       console.error("Stock holdings are empty or undefined.");
-//       return;
-//     }
-
-//     const fetchStockPrices = async () => {
-//       let totalValue = 0;
-//       const stockValues = {};
-//       let topPerformingStock = { name: "N/A", value: 0 };
-
-//       for (const stock of stockHoldings) {
-//         try {
-//           const { data } = await axios.get(
-//             `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=ctof3l1r01qpsueffvmgctof3l1r01qpsueffvn0`
-//           );
-
-//           const currentPrice = parseFloat(data?.c);
-//           if (!currentPrice) continue; // Skip if price is invalid
-
-//           const stockValue = currentPrice * stock.quantity;
-//           totalValue += stockValue;
-//           stockValues[stock.name] = stockValue;
-
-//           if (stockValue > topPerformingStock.value) {
-//             topPerformingStock = { name: stock.name, value: stockValue };
-//           }
-//         } catch (error) {
-//           console.error(`Error fetching data for ${stock.ticker}:`, error);
-//         }
-//       }
-
-//       setPortfolioValue(totalValue);
-//       setTopStock(topPerformingStock);
-//       setPortfolioDistribution(stockValues);
-//     };
-
-//     fetchStockPrices();
-//   }, [stockHoldings]);
-
-//   const chartData = {
-//     labels: Object.keys(portfolioDistribution),
-//     datasets: [
-//       {
-//         data: Object.values(portfolioDistribution),
-//         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-//       },
-//     ],
-//   };
-
-//   return (
-//     <div className="dashboard-container">
-//       <h2>Portfolio Dashboard</h2>
-//       <div className="metrics">
-//         <div className="metric">
-//           <h3>Total Portfolio Value</h3>
-//           <p>${portfolioValue.toFixed(2)}</p>
-//         </div>
-//         <div className="metric">
-//           <h3>Top Performing Stock</h3>
-//           <p>
-//             {topStock.name} (${topStock.value ? topStock.value.toFixed(2) : "0.00"})
-//           </p>
-//         </div>
-//       </div>
-//       <div className="chart">
-//         <h3>Portfolio Distribution</h3>
-//         <Pie data={chartData} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import PropTypes from "prop-types";
-import "./Dashboard.css";
+import { Link } from "react-router-dom";
+import { Line, Pie } from "react-chartjs-2"; 
+import { Chart as ChartJS } from "chart.js/auto"; 
 import Navbar from "../Components/Navbar";
+import "./Dashboard.css";
 
-// Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-const Dashboard = ({ stockHoldings }) => {
+function Dashboard() {
+  const [stocks, setStocks] = useState([]);
   const [portfolioValue, setPortfolioValue] = useState(0);
-  const [topStock, setTopStock] = useState({ name: "N/A", value: 0 });
-  const [portfolioDistribution, setPortfolioDistribution] = useState({});
+  const [topPerformingStock, setTopPerformingStock] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [portfolioDistribution, setPortfolioDistribution] = useState([]);
+
+  const userId = localStorage.getItem("U_Id");
 
   useEffect(() => {
-    const fetchStockPrices = async () => {
-      let totalValue = 0;
-      const stockValues = {};
-      let topPerformingStock = { name: "N/A", value: 0 };
+    if (!userId) {
+      alert("User is not logged in. Please log in again.");
+      return;
+    }
 
-      for (const stock of stockHoldings) {
-        try {
-          const { data } = await axios.get(
-            `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=ctof3l1r01qpsueffvmgctof3l1r01qpsueffvn0`
-          );
+    const fetchDashboardData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/currentStock/${userId}`);
+        const data = await response.json();
 
-          const currentPrice = parseFloat(data?.c);
-          if (!currentPrice) continue; // Skip if price is invalid
-
-          const stockValue = currentPrice * stock.quantity;
-          totalValue += stockValue;
-          stockValues[stock.name] = stockValue;
-
-          if (stockValue > topPerformingStock.value) {
-            topPerformingStock = { name: stock.name, value: stockValue };
-          }
-        } catch (error) {
-          console.error(`Error fetching data for ${stock.ticker}:`, error);
+        if (response.ok) {
+          setStocks(data);
+          await fetchStockPrices(data);
+        } else {
+          alert(data.message || "Failed to fetch stock data");
         }
+      } catch (error) {
+        console.error("Error fetching stock data:", error);
+        alert("An error occurred while fetching stock data.");
+      } finally {
+        setIsLoading(false);
       }
-
-      setPortfolioValue(totalValue);
-      setTopStock(topPerformingStock);
-      setPortfolioDistribution(stockValues);
     };
 
-    fetchStockPrices();
-  }, [stockHoldings]);
+    const fetchStockPrices = async (stocks) => {
+      const API_TOKEN = "ctof3l1r01qpsueffvmgctof3l1r01qpsueffvn0"; 
+      try {
+        let totalValue = 0;
+        let topStock = null;
+        const stockValues = [];
+
+        const stockPricePromises = stocks.map(async (stock) => {
+          const response = await fetch(
+            `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${API_TOKEN}`
+          );
+          const data = await response.json();
+          const latestPrice = data.c || 0;
+          const stockValue = stock.quantity * latestPrice;
+          totalValue += stockValue;
+
+          if (!topStock || stockValue > topStock.value) {
+            topStock = { ...stock, value: stockValue };
+          }
+
+          stockValues.push({ name: stock.stock_name, value: stockValue });
+
+          return { ...stock, latestPrice, stockValue };
+        });
+
+        const updatedStocks = await Promise.all(stockPricePromises);
+        setStocks(updatedStocks);
+        setPortfolioValue(totalValue);
+        setTopPerformingStock(topStock);
+
+        
+        setPortfolioDistribution(stockValues);
+      } catch (error) {
+        console.error("Error fetching stock prices:", error);
+        alert("An error occurred while fetching stock prices.");
+      }
+    };
+
+    fetchDashboardData();
+  }, [userId]);
+
 
   const chartData = {
-    labels: Object.keys(portfolioDistribution),
+    labels: portfolioDistribution.map((stock) => stock.name),
     datasets: [
       {
-        data: Object.values(portfolioDistribution),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+        data: portfolioDistribution.map((stock) => stock.value),
+        backgroundColor: ["#21094E", "#118B50", "#000957", "#872341", "#F29F58"],
+        hoverBackgroundColor: ["#21094E", "#118B50", "#000957", "#872341", "#F29F58"],
       },
     ],
   };
 
   return (
     <div>
-      <Navbar/>
-    <div className="dashboard-container">
-      <h2>Portfolio Dashboard</h2>
-      <div className="metrics">
-        <div className="metric">
-          <h3>Total Portfolio Value</h3>
-          <p>${portfolioValue.toFixed(2)}</p>
-        </div>
-        <div className="metric">
-          <h3>Top Performing Stock</h3>
-          <p>
-            {topStock.name} (${topStock.value ? topStock.value.toFixed(2) : "0.00"})
-          </p>
-        </div>
-      </div>
-      <div className="chart">
-        <h3>Portfolio Distribution</h3>
-        {Object.keys(portfolioDistribution).length > 0 ? (
-          <Pie data={chartData} />
+      <Navbar />
+      <div className="dashboard-container">
+        {isLoading ? (
+          <p>Loading your portfolio...</p>
         ) : (
-          <p>No data available for chart.</p>
+          <>
+            <h2>Your Portfolio Overview</h2>
+            <div className="portfolio-summary">
+              <p>Total Portfolio Value: ${portfolioValue.toFixed(2)}</p>
+              <p>Total Number of Stocks: {stocks.length}</p>
+            </div>
+
+            {/* Top Performing Stock */}
+            {topPerformingStock && (
+              <div className="top-performing-stock">
+                <h3>Top Performing Stock</h3>
+                <p>
+                  <strong>{topPerformingStock.stock_name}</strong> -{" "}
+                  {topPerformingStock.ticker}
+                </p>
+                <p>Value: ${topPerformingStock.value.toFixed(2)}</p>
+              </div>
+            )}
+
+            
+
+            {/* Portfolio Distribution Chart */}
+            {portfolioDistribution.length > 0 && (
+              <div className="portfolio-distribution-chart">
+                <h3>Portfolio Distribution</h3>
+                <Pie data={chartData} />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
-    </div>
   );
-};
-
-Dashboard.defaultProps = {
-  stockHoldings: [
-    { name: "Apple Inc.", ticker: "AAPL", quantity: 10 },
-    { name: "Tesla Inc.", ticker: "TSLA", quantity: 5 },
-    { name: "Microsoft Corp.", ticker: "MSFT", quantity: 20 },
-  ],
-};
-
-Dashboard.propTypes = {
-  stockHoldings: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      ticker: PropTypes.string.isRequired,
-      quantity: PropTypes.number.isRequired,
-    })
-  ),
-};
+}
 
 export default Dashboard;

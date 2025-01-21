@@ -9,7 +9,7 @@ import NewStockDetails from './Pages/NewStockDetails';
 import CurrentStock from './Pages/CurrentStock';
 import Login from './Pages/Login'; // Import the Login component
 import Signup from './Pages/Signup';
-import HomePage from './Pages/Home';
+
 import Home from './Pages/Home';
 
 
