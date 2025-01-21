@@ -22,7 +22,7 @@ Before running the application, install the required dependencies:
 npm install
 ```
 ---
-### 2.Start the Frontend
+### 2. Start the Frontend
 
 1.Open the terminal.
 2.Navigate to the frontend folder:
@@ -33,20 +33,17 @@ cd frontend
 ```bash
 npm start
 ```
-### 4.Start the Backend
+### 4. Start the Backend
 1.Open a new terminal or split the terminal window.
 2.Navigate to the backend folder:
+```bash
+cd backend
+```
 3.Run the following command to start the backend:
 ```bash
 node server.js
 ```
-open the Terminal
-Navigate to fronend folder
 
-to run the frontend type in terminal 
-```bash
-npm start
-```
 ### Frontend Quick Start
 
 If you're already in the frontend directory, use these commands to launch the frontend:
