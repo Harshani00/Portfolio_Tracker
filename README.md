@@ -51,9 +51,11 @@ cd frontend
 npm start
 ```
 
-## Assumptions or Limitations
+## Limitations
 
 - **API Rate Limiting**: 
   The Finnhub API has a rate limit of 30 requests per second. Due to this limitation, the application cannot display separate portfolios for each user simultaneously. Instead, all portfolios are aggregated and shown together, ensuring that the number of requests does not exceed the allowed limit.
+
+![currentstocks](https://github.com/user-attachments/assets/5473e4d5-f060-4945-bcfd-4e604806522f)
 
 
