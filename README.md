@@ -34,8 +34,8 @@ cd frontend
 npm start
 ```
 ### 4. Start the Backend
-1.Open a new terminal or split the terminal window.
-2.Navigate to the backend folder:
+1. Open a new terminal or split the terminal window.
+2. Navigate to the backend folder:
 ```bash
 cd backend
 ```
