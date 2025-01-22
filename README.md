@@ -116,8 +116,10 @@ This design provides an efficient way to manage users, their portfolios, and the
 
 I have successfully deployed the frontend of my application on Vercel. However, I encountered difficulties deploying the backend as each platform requires card details for the process. As a result, I have recorded a demonstration of my web application and uploaded it for your review. If it is acceptable, you can use the link below to access the demonstration.
 
-Frontend Deployment: https://portfolio-tracker-euoi774o4-devikas-projects-478a0364.vercel.app/home
-Application Demonstration: https://drive.google.com/file/d/1kf6iT6o3kykiMXlGC9xQy7290pYN0DAW/view?usp=sharing
-GitHub Repository Link: https://github.com/Harshani00/Portfolio_Tracker.git
+Frontend Deployment: https://portfolio-tracker-euoi774o4-devikas-projects-478a0364.vercel.app/home.
+
+Application Demonstration: https://drive.google.com/file/d/1kf6iT6o3kykiMXlGC9xQy7290pYN0DAW/view?usp=sharing.
+
+GitHub Repository Link: https://github.com/Harshani00/Portfolio_Tracker.git.
 
 
