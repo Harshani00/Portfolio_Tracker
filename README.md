@@ -1,6 +1,6 @@
 # Portfolio360
 
-Managing your investments and tracking their performance is critical for achieving your financial goals. The **Portfolio Tracker** helps users effectively monitor their stock investments, analyze performance, and make informed decisions. Designed for investors, this tool simplifies tracking portfolio value, identifying top-performing stocks, and visualizing portfolio distribution through intuitive charts.
+Managing your investments and tracking their performance is critical for achieving your financial goals. The **Portfolio360** helps users effectively monitor their stock investments, analyze performance, and make informed decisions. Designed for investors, this tool simplifies tracking portfolio value, identifying top-performing stocks, and visualizing portfolio distribution through intuitive charts.
 
 ![home](https://github.com/user-attachments/assets/cffc593f-9ee3-4302-bac3-d410841c0d79)
 
@@ -57,5 +57,59 @@ npm start
   The Finnhub API has a rate limit of 30 requests per second. Due to this limitation, the application cannot display separate portfolios for each user simultaneously. Instead, all portfolios are aggregated and shown together, ensuring that the number of requests does not exceed the allowed limit.
 
 ![currentstocks](https://github.com/user-attachments/assets/5473e4d5-f060-4945-bcfd-4e604806522f)
+
+
+## Database Schema Design
+
+This database schema is designed to manage user portfolios, stocks, and the relationship between them. It consists of the following tables:
+
+## **Users Table**
+This table stores user information.
+
+| Column       | Type    | Description                                    |
+|--------------|---------|------------------------------------------------|
+| `User_Id`    | INT     | Unique identifier for each user               |
+| `Name`       | VARCHAR | Name of the user                              |
+| `Email`      | VARCHAR | Email of the user                             |
+| `Password`   | VARCHAR | Password for user authentication              |
+| `created_at` | DATETIME| Timestamp when the user account was created   |
+
+## **Portfolios Table**
+This table stores the portfolios for each user. A user can have multiple portfolios.
+
+| Column        | Type    | Description                                        |
+|---------------|---------|----------------------------------------------------|
+| `Portfolio_Id`| INT     | Unique identifier for each portfolio              |
+| `U_Id`        | INT     | Foreign key referencing `User_Id` in the `Users` table |
+| `portfolio_name` | VARCHAR | Name of the portfolio                          |
+| `created_date` | DATETIME | Timestamp when the portfolio was created         |
+
+## **Portfolio_Stocks Table**
+This table stores the relationship between portfolios and stocks, including the quantity of each stock in the portfolio.
+
+| Column       | Type    | Description                                         |
+|--------------|---------|-----------------------------------------------------|
+| `Id`         | INT     | Unique identifier for each record                  |
+| `Portfolio_Id` | INT    | Foreign key referencing `Portfolio_Id` in the `Portfolios` table |
+| `Stock_Id`   | INT     | Foreign key referencing `Stock_Id` in the `Stocks` table |
+| `Quantity`   | INT     | Quantity of the stock in the portfolio             |
+
+## **Stocks Table**
+This table stores the details of stocks, including the quantity owned by the user.
+
+| Column         | Type    | Description                                         |
+|----------------|---------|-----------------------------------------------------|
+| `Stock_Id`     | INT     | Unique identifier for each stock                   |
+| `U_Id`         | INT     | Foreign key referencing `User_Id` in the `Users` table |
+| `stock_name`   | VARCHAR | Name of the stock                                  |
+| `ticker`       | VARCHAR | Stock ticker symbol                                |
+| `quantity`     | INT     | Total quantity of the stock owned by the user     |
+| `buy_price`    | DECIMAL | Purchase price of the stock                        |
+| `purchase_date`| DATETIME| Date when the stock was purchased                  |
+| `created_date` | DATETIME| Timestamp when the stock record was created       |
+
+---
+
+This design provides an efficient way to manage users, their portfolios, and the stocks within those portfolios. The use of foreign keys ensures data integrity, and indexing on frequently queried fields (such as `User_Id`, `Portfolio_Id`, and `Stock_Id`) improves performance for large datasets.
 
 
